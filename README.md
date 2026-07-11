@@ -1,18 +1,21 @@
-# Ring Buffer (C)
+# Linux Userland Tooling
+This repo is used for c linux userland tooling including experiments from tlpi
+---------------------------
+## Ring Buffer (C)
 
 An implementation of a circular (ring) buffer in C. A ring buffer is a fixed-size data structure that uses a single, contiguous block of memory and wraps around when the end is reached. This makes it efficient for scenarios where data is produced and consumed at different rates.
 
-## Features
+### Features
 - Fixed-size circular buffer
 - Constant-time enqueue (write) and dequeue (read)
 - Overwrite mode or blocking mode (configurable)
 - Simple API for buffer operations
 
-## Tech Stack
+### Tech Stack
 - C (pointers, arrays)
 - Standard Library for testing (stdio, assert)
 
-## Usage
+### Usage
 ```c
 #include "ring_buffer.h"
 
@@ -33,6 +36,6 @@ int main() {
     return 0;
 }
 ```
-## Compile and run locally
+### Compile and run locally
 gcc ring_buffer.c main.c -o ring_buffer
 ./ring_buffer
