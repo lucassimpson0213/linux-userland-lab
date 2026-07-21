@@ -1,0 +1,5 @@
+    tracepoint:syscalls:sys_enter_read   /* The probe
+/comm == "bash"/                      /* The predicate */
+{
+  @[args->fd] = sum(args->count);     /* An action */
+}

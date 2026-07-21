@@ -11,7 +11,8 @@ int main() {
   ssize_t index = 0;
   char buf[BUFSIZE];
   ssize_t sizeOrStatus;
-  while ((sizeOrStatus = read(STDIN_FILENO, buf, BUFSIZE))) {
+
+  while ((sizeOrStatus = read(STDIN_FILENO, buf, BUFSIZE)) > 0) {
 
     printf("%s", buf);
     fflush(stdout);
