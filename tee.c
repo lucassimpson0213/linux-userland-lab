@@ -1,12 +1,22 @@
 #include <error.h>
 #include <fcntl.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #define BUFSIZE 1024
 #define ACCUMSIZE 8192
 
-void write_to_accum(char *src[], char *dest[]) {}
+void write_to_accum(char *src[], char *dest[], ssize_t current_idx) {
+  const uint64_t SPACE_TIL_END = ACCUMSIZE - (current_idx + 1);
+
+  if (!(SPACE_TIL_END < 1024)) {
+    for (int i = 0; i < sizeof(*src); i++) {
+      dest[i + current_idx] = src[i];
+    }
+  }
+}
 int main(int argc, char *argv[]) {
   // read from stdin until end of file
 
