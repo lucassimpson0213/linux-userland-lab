@@ -3,14 +3,20 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#define BUFSIZE 2000
-int main() {
+#define BUFSIZE 1024
+#define ACCUMSIZE 8192
+
+void write_to_accum(char *src[], char *dest[]) {}
+int main(int argc, char *argv[]) {
   // read from stdin until end of file
 
-  int fd;
-  ssize_t index = 0;
+  // file to write to
+  char *file_arg = argv[1];
+
   char buf[BUFSIZE];
+  char accum[ACCUMSIZE];
   ssize_t sizeOrStatus;
+  ssize_t index = 0;
 
   while ((sizeOrStatus = read(STDIN_FILENO, buf, BUFSIZE)) > 0) {
 
