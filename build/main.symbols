@@ -1,0 +1,11 @@
+                 U __errno_location
+                 U fflush
+0000000000000092 T file_exists
+00000000000000ec T main
+                 U open
+                 U printf
+                 U read
+                 U stat
+                 U stdout
+                 U write
+0000000000000000 T write_to_accum
