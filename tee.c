@@ -27,8 +27,8 @@ int write_to_accum(char *src[], char *dest[], ssize_t current_idx) {
 }
 
 bool file_exists(const char *filename) {
-  struct stat *buffer;
-  int error = stat(filename, buffer);
+  struct stat buffer;
+  int error = stat(filename, &buffer);
   if (error == -1) {
     // now inspect errno
     //  errno is only set after the system call fails with -1
@@ -74,7 +74,15 @@ int main(int argc, char *argv[]) {
   if (!file_exists(file_arg)) {
     return 1;
   }
-  int fd = open(file_arg, O_FSYNC); 
-  ssize_t ret = write(fd, accum, index);
-   
+  int fd = open(file_arg, O_RDWR | O_CREAT, 0644);
+  ssize_t ret = write(fd, buf, index);
+
+  if (ret == -1) {
+    printf("There has been a failure writing to the file");
+    printf("%d", errno);
+    if (errno == EBADFD) {
+        printf("bad file descriptor");
+    }
+    return 1;
+  }
 }
