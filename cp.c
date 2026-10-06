@@ -1,7 +1,18 @@
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <errno.h>
+
+int errExit(int errnumber) {
+    char * error = strerror(errnumber);
+
+    return 1; 
+    // this is a placeholder for the function 
+    // to examine error info from errno after an error has occurred
+}
+
 
 int main(int argc, char *argv[]) {
 
@@ -17,12 +28,9 @@ int main(int argc, char *argv[]) {
 
   if (fd == -1) {
     // do something... 
-    return 1;
+    errExit(errno);
   }
 }
 
 
-void errExit() {
-    // this is a placeholder for the function 
-    // to examine error info from errno after an error has occurred
-}
+
