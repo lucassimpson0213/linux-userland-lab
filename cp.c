@@ -5,9 +5,9 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-int errExit(int errnumber) {
+int errExit(int errnumber, char * formatstring) {
     char * error = strerror(errnumber);
-
+    
     return 1; 
     // this is a placeholder for the function 
     // to examine error info from errno after an error has occurred
