@@ -10,10 +10,19 @@ int main(int argc, char *argv[]) {
     printf("usage: cp <file> <file> \n");
   }
 
-  int flags = O_RDONLY | O_DIRECTORY | O_APPEND;
+  int flags = O_RDONLY;
+
+  // owner is the user 
   int fd = open(argv[1], flags, S_IRUSR);
 
-  if (fd == 0) {
+  if (fd == -1) {
     // do something... 
+    return 1;
   }
+}
+
+
+void errExit() {
+    // this is a placeholder for the function 
+    // to examine error info from errno after an error has occurred
 }
