@@ -4,22 +4,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <errno.h>
 #include <unistd.h>
 
 #define READBUFSIZE 1024
 
+int errExit(int errnumber, char *formatstring) {
+  char *error = strerror(errnumber);
 
-
-int errExit(int errnumber, char * formatstring) {
-    char * error = strerror(errnumber);
-    
-    printf(formatstring, error);
-    return 1; 
-    // this is a placeholder for the function 
-    // to examine error info from errno after an error has occurred
+  printf(formatstring, error);
+  return 1;
+  // this is a placeholder for the function
+  // to examine error info from errno after an error has occurred
 }
-
 
 int main(int argc, char *argv[]) {
 
@@ -30,20 +26,17 @@ int main(int argc, char *argv[]) {
 
   int flags = O_RDONLY;
 
-  // owner is the user 
+  // owner is the user
   int fd = open(argv[1], flags, S_IRUSR);
 
   if (fd == -1) {
-    // do something... 
+    // do something...
     errExit(errno, "There has been an error opening the file: \n %s");
   }
-  
+
   uint8_t buffer[1024] = {0};
   int read_bytes = read(fd, buffer, 1024);
-  
 
-  for(int i = 0; i < 1024; i++)
+  for (int i = 0; i < 1024; i++) {
+  }
 }
-
-
-
