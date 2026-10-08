@@ -4,7 +4,12 @@ IFS=$'\n\t'
 
 main() {
     gcc -o copy cp.c  
-    ./copy
+    if [[ $# -gt 1 ]]; then 
+       ./copy "$1" "$2"
+    else 
+        ./copy "$1"
+    fi
+
 }
 
 main "$@"
