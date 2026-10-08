@@ -7,6 +7,10 @@
 #include <errno.h>
 #include <unistd.h>
 
+#define READBUFSIZE 1024
+
+
+
 int errExit(int errnumber, char * formatstring) {
     char * error = strerror(errnumber);
     
@@ -36,6 +40,9 @@ int main(int argc, char *argv[]) {
   
   uint8_t buffer[1024] = {0};
   int read_bytes = read(fd, buffer, 1024);
+  
+
+  for(int i = 0; i < 1024; i++)
 }
 
 
