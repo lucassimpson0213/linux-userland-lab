@@ -1,11 +1,9 @@
 #include <errno.h>
 #include <fcntl.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <unistd.h>
 
 int errExit(int errnumber, char * formatstring) {
     char * error = strerror(errnumber);
@@ -33,9 +31,6 @@ int main(int argc, char *argv[]) {
     // do something... 
     errExit(errno, "There has been an error opening the file: \n %s");
   }
-  
-  uint8_t buffer[1024] = {0};
-  int read_bytes = read(fd, buffer, 1024);
 }
 
 
