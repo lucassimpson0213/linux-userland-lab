@@ -25,7 +25,7 @@ void print_buffer(const char *buffer) {
 
 int main(int argc, char *argv[]) {
 
-  if (argc != 3 || strcmp(argv[0], "--help") == 0) {
+  if (argc < 2 || strcmp(argv[0], "--help") == 0) {
     printf("not enough arguments, expected 3 or more and got %i...\n", argc);
     printf("usage: cp <file> <file> \n");
   }
