@@ -19,17 +19,19 @@ int err_exit(int errnumber, char *formatstring) {
   // to examine error info from errno after an error has occurred
 }
 
-void write_to_file(const char *file_name,char * buffer, int number_of_bytes) {
+void write_to_file(const char *file_name, char *buffer, int number_of_bytes) {
   int fd = open(file_name, O_WRONLY);
 
   if (fd == -1) {
-     err_exit(errno, "There was an error opening the file: \n %s \n");
+    err_exit(errno, "There was an error opening the file: \n %s \n");
   }
 
   int bytes_written = write(fd, buffer, number_of_bytes);
-  
-  //ensure that you don't overwrite outside the buffer so ensure that the buffer is a certain lenght
-  // also ensure that you only write the amount of bytes that you read from the other file
+
+  // ensure that you don't overwrite outside the buffer so ensure that the
+  // buffer is a certain lenght
+  //  also ensure that you only write the amount of bytes that you read from the
+  //  other file
 }
 
 void print_buffer(const char *buffer) { printf("%s", buffer); }
@@ -53,7 +55,10 @@ int main(int argc, char *argv[]) {
 
   char buffer[1024] = {0};
   int read_bytes = read(fd, buffer, 1024);
-    
-  
+
+  if (read_bytes == -1) {
+     err_exit(errno, "There was an error reading the file %s \n");
+  }
+
   // print_buffer(buffer);
 }
