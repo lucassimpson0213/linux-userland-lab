@@ -13,7 +13,7 @@ struct Buffer {
 
 void newbuf(size_t capacity);
 
-
+// track new size 
 void insert(int num);
 
 
