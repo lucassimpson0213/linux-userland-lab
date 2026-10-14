@@ -4,11 +4,13 @@
 #include <stddef.h>
 
 
-struct Buffer {
-    char buffer [BUFSIZE];
-    int capacity; 
-    size_t size; 
-};
+// typedef struct  {
+//     char buffer [BUFSIZE];
+//     int capacity; 
+//     size_t size; 
+// } Buffer;
+//
+typedef struct Buffer Buffer;
 
 
 void newbuf(size_t capacity);
