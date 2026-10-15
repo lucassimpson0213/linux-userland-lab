@@ -1,17 +1,25 @@
 #include "buffer.h"
 #include <stdlib.h>
 
-
 struct Buffer {
-    char buffer [BUFSIZE];
-    int capacity; 
-    size_t size; 
+  char *buffer;
+  int capacity;
+  size_t size;
 };
 
-void new_buf(size_t capacity) {
+Buffer *new_buf(size_t capacity) {
+  // if you extend the buffer any previous pointers will be invalidated
   Buffer *buf = malloc(sizeof(Buffer));
 
   for (int i = 0; i < BUFSIZE; i++) {
-
+    // every buffer that holds characters must have a null termination byte at
+    // the end
+    if (i == BUFSIZE - 1) {
+      buf->buffer[i] = '\n';
+    } else {
+      buf->buffer[i] = 0;
+    }
   }
+
+  return buf;
 }
