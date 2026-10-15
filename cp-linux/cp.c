@@ -1,3 +1,4 @@
+#include "buffer.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stddef.h>
@@ -54,10 +55,14 @@ int main(int argc, char *argv[]) {
   }
 
   char buffer[1024] = {0};
-  int read_bytes = read(fd, buffer, 1024);
+  Buffer *buf = new_buf(1024);
+  int read_bytes = read(fd, buffer, 1024); 
+
 
   if (read_bytes == -1) {
-     err_exit(errno, "There was an error reading the file %s \n");
+    err_exit(errno, "There was an error reading the file %s \n");
+  } else if (read_bytes == 0) {
+    printf("reached end of file while reading %s", argv[1]);
   }
 
   // print_buffer(buffer);

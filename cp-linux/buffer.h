@@ -13,10 +13,12 @@
 typedef struct Buffer Buffer;
 
 
-void newbuf(size_t capacity);
+Buffer*  new_buf(size_t capacity);
 
 // track new size 
 void insert(int num);
+
+void update_size(size_t size);
 
 
 
