@@ -24,5 +24,13 @@ Buffer *new_buf(size_t capacity) {
   return buf;
 }
 
+void update_size(size_t size) {
+    // bookkeeping for size making sure no operations go outside of buffer length;
+}
+
+void destroy_buf(Buffer* buf) {
+    free(buf->buffer);
+}
+
 
 
