@@ -65,6 +65,8 @@ int main(int argc, char *argv[]) {
   } else {
     update_size(buf, read_bytes);
   }
-
+    
+ // need to add size and buffer methods 
+  write_to_file(argv[2])
   // print_buffer(buffer);
 }
