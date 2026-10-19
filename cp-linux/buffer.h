@@ -21,6 +21,8 @@ void insert(int num);
 void update_size(Buffer* buffer, size_t size);
 
 
+size_t get_size(Buffer* buffer);
+
 
 
 
