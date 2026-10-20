@@ -4,18 +4,19 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 #define READBUFSIZE 1024
 
-int err_exit(int errnumber, char *formatstring) {
+void err_exit(int errnumber, const char func [], char *formatstring) {
   char *error = strerror(errnumber);
 
-  printf(formatstring, error);
+  printf(formatstring, func, error);
   printf("\n");
-  return 1;
+  exit(EXIT_FAILURE);
   // this is a placeholder for the function
   // to examine error info from errno after an error has occurred
 }
@@ -25,13 +26,13 @@ void write_to_file(const char *file_name, const char *const buffer,
   int fd = open(file_name, O_WRONLY);
 
   if (fd == -1) {
-    err_exit(errno, "There was an error opening the file: \n %s \n");
+    err_exit(errno, __func__, "There was an error opening the file in %s: \n %s \n");
   }
 
   int bytes_written = write(fd, buffer, number_of_bytes);
 
   if (bytes_written == -1) {
-        err_exit(errno, "There was an error writing to the buffer: \n %s \n"); 
+        err_exit(errno, __func__, "There was an error writing to the buffer in %s: \n %s \n"); 
   }
 
   // ensure that you don't overwrite outside the buffer so ensure that the
@@ -56,7 +57,7 @@ int main(int argc, char *argv[]) {
 
   if (fd == -1) {
     // do something...
-    err_exit(errno, "There has been an error opening the file: \n %s");
+    err_exit(errno,__func__, "There has been an error opening the file in %s: \n %s");
   }
 
   char buffer[1024] = {0};
@@ -65,7 +66,7 @@ int main(int argc, char *argv[]) {
   int read_bytes = read(fd, buf_ref, 1024);
 
   if (read_bytes == -1) {
-    err_exit(errno, "There was an error reading the file %s \n");
+    err_exit(errno, __func__, "There was an error reading the file in %s: \n %s \n");
   } else if (read_bytes == 0) {
     printf("reached end of file while reading %s", argv[1]);
   } else {

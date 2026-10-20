@@ -31,8 +31,16 @@ void update_size(Buffer* buffer, size_t size) {
     buffer->size = size; 
 }
 
-char * get_buffer(Buffer * buf) {
+size_t get_size(Buffer* buf) {
+    return 0;
+}
+
+const char *const  get_raw_bytes(Buffer * buf) {
     return buf->buffer;
+}
+
+char * const get_raw_bytes_mut(Buffer *buf ) {
+        return buf->buffer;
 }
 void destroy_buf(Buffer* buf) {
     free(buf->buffer);
