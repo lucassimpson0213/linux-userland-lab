@@ -31,6 +31,9 @@ void update_size(Buffer* buffer, size_t size) {
     buffer->size = size; 
 }
 
+char * get_buffer(Buffer * buf) {
+    return buf->buffer;
+}
 void destroy_buf(Buffer* buf) {
     free(buf->buffer);
     buf->buffer = NULL;

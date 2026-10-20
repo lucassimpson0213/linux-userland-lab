@@ -20,7 +20,8 @@ int err_exit(int errnumber, char *formatstring) {
   // to examine error info from errno after an error has occurred
 }
 
-void write_to_file(const char *file_name, char *buffer, int number_of_bytes) {
+void write_to_file(const char *file_name, const char *const buffer,
+                   int number_of_bytes) {
   int fd = open(file_name, O_WRONLY);
 
   if (fd == -1) {
@@ -28,6 +29,10 @@ void write_to_file(const char *file_name, char *buffer, int number_of_bytes) {
   }
 
   int bytes_written = write(fd, buffer, number_of_bytes);
+
+  if (bytes_written == -1) {
+        err_exit(errno, "There was an error writing to the buffer: \n %s \n"); 
+  }
 
   // ensure that you don't overwrite outside the buffer so ensure that the
   // buffer is a certain lenght
@@ -55,8 +60,9 @@ int main(int argc, char *argv[]) {
   }
 
   char buffer[1024] = {0};
-  Buffer *buf = new_buf(1024);
-  int read_bytes = read(fd, buffer, 1024);
+  Buffer *buf = new_buf(BUFSIZE);
+  char *const buf_ref = get_raw_bytes_mut(buf);
+  int read_bytes = read(fd, buf_ref, 1024);
 
   if (read_bytes == -1) {
     err_exit(errno, "There was an error reading the file %s \n");
@@ -65,8 +71,10 @@ int main(int argc, char *argv[]) {
   } else {
     update_size(buf, read_bytes);
   }
- size_t current_size = get_size(buf);
- // need to add size and buffer methods 
-  write_to_file(argv[2], buf, current_size);
-  // print_buffer(buffer);
+
+  size_t current_size = get_size(buf);
+  const char *const buffer_ref = get_raw_bytes(buf);
+
+  // need to add size and buffer methods
+  write_to_file(argv[2], get_raw_bytes(buf), current_size);
 }

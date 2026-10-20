@@ -23,6 +23,10 @@ void update_size(Buffer* buffer, size_t size);
 
 size_t get_size(Buffer* buffer);
 
+const char *const  get_raw_bytes(Buffer * buf);
+
+char * const get_raw_bytes_mut(Buffer * buf);
+
 
 
 
