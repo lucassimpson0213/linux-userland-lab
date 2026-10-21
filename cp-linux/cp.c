@@ -11,7 +11,7 @@
 
 #define READBUFSIZE 1024
 
-void err_exit(int errnumber, const char func [], char *formatstring) {
+void err_exit(int errnumber, const char func[], char *formatstring) {
   char *error = strerror(errnumber);
 
   printf(formatstring, func, error);
@@ -26,13 +26,15 @@ void write_to_file(const char *file_name, const char *const buffer,
   int fd = open(file_name, O_WRONLY);
 
   if (fd == -1) {
-    err_exit(errno, __func__, "There was an error opening the file in %s: \n %s \n");
+    err_exit(errno, __func__,
+             "There was an error opening the file in %s: \n %s \n");
   }
 
   int bytes_written = write(fd, buffer, number_of_bytes);
 
   if (bytes_written == -1) {
-        err_exit(errno, __func__, "There was an error writing to the buffer in %s: \n %s \n"); 
+    err_exit(errno, __func__,
+             "There was an error writing to the buffer in %s: \n %s \n");
   }
 
   // ensure that you don't overwrite outside the buffer so ensure that the
@@ -41,7 +43,10 @@ void write_to_file(const char *file_name, const char *const buffer,
   //  other file
 }
 
-void print_buffer(const char *buffer) { printf("%s", buffer); }
+void print_buffer(const char *buffer, int line) {
+  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
+         __FILE__, buffer);
+}
 
 int main(int argc, char *argv[]) {
 
@@ -57,7 +62,8 @@ int main(int argc, char *argv[]) {
 
   if (fd == -1) {
     // do something...
-    err_exit(errno,__func__, "There has been an error opening the file in %s: \n %s");
+    err_exit(errno, __func__,
+             "There has been an error opening the file in %s: \n %s");
   }
 
   char buffer[1024] = {0};
@@ -65,13 +71,18 @@ int main(int argc, char *argv[]) {
   char *const buf_ref = get_raw_bytes_mut(buf);
   int read_bytes = read(fd, buf_ref, 1024);
 
+  print_buffer(buf_ref, __LINE__);
+
   if (read_bytes == -1) {
-    err_exit(errno, __func__, "There was an error reading the file in %s: \n %s \n");
+    err_exit(errno, __func__,
+             "There was an error reading the file in %s: \n %s \n");
   } else if (read_bytes == 0) {
     printf("reached end of file while reading %s", argv[1]);
   } else {
     update_size(buf, read_bytes);
   }
+
+  print_buffer(buf_ref, __LINE__);
 
   size_t current_size = get_size(buf);
   const char *const buffer_ref = get_raw_bytes(buf);
