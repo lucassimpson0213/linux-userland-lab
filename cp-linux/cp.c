@@ -21,9 +21,14 @@ void err_exit(int errnumber, const char func[], char *formatstring) {
   // to examine error info from errno after an error has occurred
 }
 
-void write_to_file(const char *file_name, const char *const buffer,
+void print_buffer(const char *buffer, int line) {
+  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
+         __FILE__, buffer);
+}
+void write_to_file(const char *file_name, char *const buffer,
                    int number_of_bytes) {
-  int fd = open(file_name, O_WRONLY);
+  int fd = open(file_name, O_WRONLY | O_CREAT, 0644);
+  print_buffer(buffer, __LINE__);
 
   if (fd == -1) {
     err_exit(errno, __func__,
@@ -41,11 +46,6 @@ void write_to_file(const char *file_name, const char *const buffer,
   // buffer is a certain lenght
   //  also ensure that you only write the amount of bytes that you read from the
   //  other file
-}
-
-void print_buffer(const char *buffer, int line) {
-  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
-         __FILE__, buffer);
 }
 
 int main(int argc, char *argv[]) {
@@ -88,5 +88,5 @@ int main(int argc, char *argv[]) {
   const char *const buffer_ref = get_raw_bytes(buf);
 
   // need to add size and buffer methods
-  write_to_file(argv[2], get_raw_bytes(buf), current_size);
+  write_to_file(argv[2], get_raw_bytes_mut(buf), current_size);
 }

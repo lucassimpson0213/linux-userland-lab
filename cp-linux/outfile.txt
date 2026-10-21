@@ -22,23 +22,21 @@ void err_exit(int errnumber, const char func[], char *formatstring) {
   // to examine error info from errno after an error has occurred
 }
 
-void write_to_file(const char *file_name, const char *const buffer,
+void print_buffer(const char *buffer, int line) {
+  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
+         __FILE__, buffer);
+}
+void write_to_file(const char *file_name, char *const buffer,
                    int number_of_bytes) {
-  int fd = open(file_name, O_WRONLY);
+  int fd = open(file_name, O_WRONLY | O_CREAT, 0644);
+  print_buffer(buffer, __LINE__);
 
   if (fd == -1) {
     err_exit(errno, __func__,
              "There was an error opening the file in %s: \n %s \n");
   }
 
-  int bytes_written = write(fd, buffer, number_of_bytes);
-
-  if (bytes_written == -1) {
-    err_exit(errno, __func__,
-             "There was an error writing to the buffer in %s: \n %s \n");
-  }
-
-  // ensure that you don't overwri 
+  int bytes_written = write(fd,  
  current state of buffer on line 85 of file cp.c: 
  #include "buffer.h"
 #include <errno.h>
@@ -63,21 +61,58 @@ void err_exit(int errnumber, const char func[], char *formatstring) {
   // to examine error info from errno after an error has occurred
 }
 
-void write_to_file(const char *file_name, const char *const buffer,
+void print_buffer(const char *buffer, int line) {
+  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
+         __FILE__, buffer);
+}
+void write_to_file(const char *file_name, char *const buffer,
                    int number_of_bytes) {
-  int fd = open(file_name, O_WRONLY);
+  int fd = open(file_name, O_WRONLY | O_CREAT, 0644);
+  print_buffer(buffer, __LINE__);
 
   if (fd == -1) {
     err_exit(errno, __func__,
              "There was an error opening the file in %s: \n %s \n");
   }
 
-  int bytes_written = write(fd, buffer, number_of_bytes);
+  int bytes_written = write(fd,  
+ current state of buffer on line 31 of file cp.c: 
+ #include "buffer.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
-  if (bytes_written == -1) {
+#define READBUFSIZE 1024
+
+void err_exit(int errnumber, const char func[], char *formatstring) {
+  char *error = strerror(errnumber);
+
+  printf(formatstring, func, error);
+  printf("\n");
+  exit(EXIT_FAILURE);
+  // this is a placeholder for the function
+  // to examine error info from errno after an error has occurred
+}
+
+void print_buffer(const char *buffer, int line) {
+  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
+         __FILE__, buffer);
+}
+void write_to_file(const char *file_name, char *const buffer,
+                   int number_of_bytes) {
+  int fd = open(file_name, O_WRONLY | O_CREAT, 0644);
+  print_buffer(buffer, __LINE__);
+
+  if (fd == -1) {
     err_exit(errno, __func__,
-             "There was an error writing to the buffer in %s: \n %s \n");
+             "There was an error opening the file in %s: \n %s \n");
   }
 
-  // ensure that you don't overwri 
+  int bytes_written = write(fd,  
  
