@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "buffer.h"
 #include <errno.h>
 #include <fcntl.h>
@@ -22,8 +23,8 @@ void err_exit(int errnumber, const char func[], char *formatstring) {
 }
 
 void print_buffer(const char *buffer, int line) {
-  printf("current state of buffer on line %d of file %s: \n %s \n ", line,
-         __FILE__, buffer);
+  printf("current state of buffer on line %d of file %s: \n\n %s \n\n\n\n ",
+         line, __FILE__, buffer);
 }
 void write_to_file(const char *file_name, char *const buffer,
                    int number_of_bytes) {
@@ -41,6 +42,8 @@ void write_to_file(const char *file_name, char *const buffer,
     err_exit(errno, __func__,
              "There was an error writing to the buffer in %s: \n %s \n");
   }
+
+  printf("successfully wrote %d to file ", bytes_written);
 
   // ensure that you don't overwrite outside the buffer so ensure that the
   // buffer is a certain lenght
@@ -70,6 +73,7 @@ int main(int argc, char *argv[]) {
   Buffer *buf = new_buf(BUFSIZE);
   char *const buf_ref = get_raw_bytes_mut(buf);
   int read_bytes = read(fd, buf_ref, 1024);
+  assert(read_bytes > 0);
 
   print_buffer(buf_ref, __LINE__);
 
@@ -80,13 +84,18 @@ int main(int argc, char *argv[]) {
     printf("reached end of file while reading %s", argv[1]);
   } else {
     update_size(buf, read_bytes);
+    assert(get_size(buf) > 0);
   }
 
   print_buffer(buf_ref, __LINE__);
 
   size_t current_size = get_size(buf);
   const char *const buffer_ref = get_raw_bytes(buf);
-
+  char *const raw_mut_buf = get_raw_bytes_mut(buf);
+  print_buffer(raw_mut_buf, __LINE__);
   // need to add size and buffer methods
+  printf("\n\n First argument: %s  :second argument: %s \n \n", argv[1], argv[2]);
   write_to_file(argv[2], get_raw_bytes_mut(buf), current_size);
+
+ destroy_buf(buf); 
 }

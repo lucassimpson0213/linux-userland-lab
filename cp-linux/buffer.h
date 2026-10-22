@@ -28,6 +28,8 @@ const char *const  get_raw_bytes(Buffer * buf);
 char * const get_raw_bytes_mut(Buffer * buf);
 
 
+void destroy_buf(Buffer * buf);
+
 
 
 

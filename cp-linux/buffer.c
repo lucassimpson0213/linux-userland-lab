@@ -10,6 +10,7 @@ struct Buffer {
 Buffer *new_buf(size_t capacity) {
   // if you extend the buffer any previous pointers will be invalidated
   Buffer *buf = malloc(sizeof(Buffer));
+  buf->size = 0;
   buf->buffer = malloc(BUFSIZE);
 
 
@@ -32,7 +33,7 @@ void update_size(Buffer* buffer, size_t size) {
 }
 
 size_t get_size(Buffer* buf) {
-    return 0;
+    return buf->size;
 }
 
 const char *const  get_raw_bytes(Buffer * buf) {
